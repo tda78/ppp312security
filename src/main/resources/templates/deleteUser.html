@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:name="userForm" th:method="post" th:action="@{/users/del}" th:object="${user}">
+    <input name="_method" type="hidden" value="delete" />
+    <input type="text"  size="40" th:field="*{id}" id="id" readonly/>
+    <p>name</p>
+    <input type="text" size="40" th:field="*{name}" id="name" readonly/>
+    <p>password</p>
+    <input type="text" size="40" th:field="*{password}" id="password" readonly/>
+    <p>age</p>
+    <input type="text" size="40" th:field="*{age}" id="age" readonly/>
+    <p>
+        <input type="submit" value="delete"/>
+        <input type="reset" value="cancel"/>
+    </p>
+
+</form>
+
+</body>
+</html>
