@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:name="userForm" method="post" th:action="@{/users/new}" th:object="${user}">
+<form th:name="userForm" method="post" th:action="@{/admin/new}" th:object="${user}">
     <input type="text" hidden size="40" th:field="*{id}" id="id"/>
     <p>name</p>
     <input type="text" size="40" th:field="*{name}" id="name"/>
@@ -13,6 +13,12 @@
     <input type="text" size="40" th:field="*{password}" id="password"/>
     <p>age</p>
     <input type="text" size="40" th:field="*{age}" id="age"/>
+
+    <input type="checkbox" name="isUser" id="isUser"checked>
+    <label for="isUser">User</label>
+    <input type="checkbox" name="isAdmin" id="isAdmin"checked>
+    <label for="isUser">Admin</label>
+
 
     <p>
         <input type="submit" value="create"/>

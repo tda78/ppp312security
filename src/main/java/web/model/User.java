@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
     @Id
     @Column(name = "UserId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(name = "UserName")
     private String name;
@@ -114,7 +115,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String RolesString(){
+    public String rolesString(){
         StringBuilder sb = new StringBuilder();
         roles.stream()
                 .map(x->x.getName())
@@ -132,5 +133,12 @@ public class User implements UserDetails {
             if (role.getName()=="USER") return true;
         }
         return false;
+    }
+    public Set<String> getRoleNames(){
+        Set<String> roleNames = new HashSet<>();
+        for (Role role: roles) {
+            roleNames.add(role.getName());
+        }
+        return roleNames;
     }
 }

@@ -1,5 +1,6 @@
 package web.controller;
 
+import web.model.Role;
 import web.model.User;
 import web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin")
 public class UsersController {
 
     private final UserService service;
@@ -42,15 +45,30 @@ public class UsersController {
     }
 
     @PatchMapping()
-    public String updateeUser(@ModelAttribute("user") User user){
+    public String updateeUser(HttpServletRequest request, @ModelAttribute("user") User user){
+        user.setRoles(new HashSet<Role>());
+        if(request.getParameter("isUser") != null){
+            user.getRoles().add(service.getRoleByName("USER"));
+        }
+        if(request.getParameter("isAdmin") != null){
+            user.getRoles().add(service.getRoleByName("ADMIN"));
+        }
+
         service.updateUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @PostMapping("/new")
-    public String saveUser(@ModelAttribute("user") User user){
+    public String saveUser(HttpServletRequest request, @ModelAttribute("user") User user){
+        user.setRoles(new HashSet<Role>());
+        if(request.getParameter("isUser")!=null){
+            user.getRoles().add(service.getRoleByName("USER"));
+        }
+        if(request.getParameter("isAdmin")!=null){
+            user.getRoles().add(service.getRoleByName("ADMIN"));
+        }
         service.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/del/{id}")
@@ -63,6 +81,6 @@ public class UsersController {
     @DeleteMapping("/del")
     public String delUser(@ModelAttribute("user") User user){
         service.deleteUser((int) user.getId());
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 }

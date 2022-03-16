@@ -16,20 +16,21 @@
             <td><h1 th:text="${user.getName()}"></h1></td>
             <td><h1 th:text="${user.getPassword()}"></h1></td>
             <td><h1 th:text="${user.getAge()}"></h1></td>
-            <td>
-
-                <button>
-                    <a th:href="@{users/{id} (id=${user.getId()})}">update</a>
-                </button>
-
-            </td>
+            <td><h1 th:text="${user.rolesString()}"></h1></td>
             <td><button>
-                <a th:href="@{users/del/{id} (id=${user.getId()})}">delete</a>
+                <a th:href="@{admin/{id} (id=${user.getId()})}">update</a>
+            </button></td>
+
+            <td><button>
+                <a th:href="@{admin/del/{id} (id=${user.getId()})}">delete</a>
             </button></td>
         </tr>
     </th:block>
 </div>
 </table>
-<button><a th:href="@{users/new}">New user</a></button>
+<button><a th:href="@{admin/new}">New user</a></button>
+<button><a href="/user">My page</a></button>
+<a href="/logout">Log out</a>
+
 </body>
 </html>

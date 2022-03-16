@@ -1,6 +1,5 @@
 package web.service;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import web.dao.RoleDao;
