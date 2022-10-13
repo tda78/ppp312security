@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+  <h1>delete user</h1>
+  <label for="mail">e-mail</label>
+  <input type="text" th:field="*{user.mail}" id="mail">
+  <br>
+  <label for="password">password</label>
+  <input th:field="*{user.pass}" type="text" id="password">
+  <br>
+  <label for="username">name</label>
+  <input th:field="*{user.username}" type="text" id="username">
+  <br>
+  <label for="age">age</label>
+  <input th:field="*{user.age}" type="text" id="age">
+  <br>
+<!--
+<select th:field="*{user.roles}" multiple >
+    <option th:each="role : ${allRoles}"
+            th:value="${role}"
+            th:text="${role.getRoleName()}">
+    </option>
+  </select>
+  -->
+
+  <br>
+  <input type="submit" value="delete user"/>
+</form>
+</body>
+</html>

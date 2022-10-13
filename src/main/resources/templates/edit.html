@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.id})}" th:object="${user}">
+  <h1>edit user</h1>
+  <label for="mail">e-mail</label>
+  <input type="text" th:field="*{mail}" id="mail">
+  <br>
+  <label for="password">password</label>
+  <input th:field="*{pass}" type="text" id="password">
+  <br>
+  <label for="username">name</label>
+  <input th:field="*{username}" type="text" id="username">
+
+  <br>
+  <label for="age">age</label>
+  <input th:field="*{age}" type="text" id="age">
+  <br>
+  <select required multiple class="form-control" th:name="selectRoles">
+    <option th:each="role: ${allRoles}"
+            th:value="${role.roleName}"
+            th:text="${role.roleName}"
+            th:selected="${user.roles.contains(role)}">
+      role
+    </option>
+  </select>
+  <br>
+  <input type="submit" value="update user"/>
+</form>
+</body>
+</html>
