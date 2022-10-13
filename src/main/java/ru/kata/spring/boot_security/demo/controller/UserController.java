@@ -24,7 +24,6 @@ public class UserController {
         String name = (SecurityContextHolder.getContext().getAuthentication().getPrincipal()).toString();
         User auth = (User) userService.loadUserByUsername(name);
         model.addAttribute("auth", auth);
-      //  model.addAttribute("roles",userService.convertRolesToNames(auth.getRoles()));
         return "userInfo";
     }
 }

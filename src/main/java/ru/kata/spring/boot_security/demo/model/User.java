@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.*;
@@ -24,9 +23,7 @@ public class User implements UserDetails {
     private byte age;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;// = new LinkedHashSet<>();
 
     public User(long id, String mail, String pass, byte age) {
@@ -126,10 +123,10 @@ public class User implements UserDetails {
     public String getStringRoles() {
 
         StringBuilder result = new StringBuilder("");
-        for (Role role:roles){
-            result.append(role.getRoleName()+ ", ");
+        for (Role role : roles) {
+            result.append(role.getRoleName() + ", ");
         }
-            return result.toString();
+        return result.toString();
 
     }
 

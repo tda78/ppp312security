@@ -12,10 +12,6 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 public class AdminController {
     UserService service;
 
-    public UserService getService() {
-        return service;
-    }
-
     @Autowired
     public void setService(UserService service) {
         this.service = service;
@@ -27,14 +23,6 @@ public class AdminController {
         return "users";
     }
 
- /*   @GetMapping("/{id}")
-    public String getUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", service.getUser(id));
-        model.addAttribute("user", new User());
-
-        return "userInfo";
-    }
-*/
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
@@ -43,9 +31,8 @@ public class AdminController {
     }
 
     @PostMapping()
-    public String addUser(@ModelAttribute("user") User user,
-             @RequestParam(value = "selectRoles") String[] selectedRoles) {
-        service.saveUser(user,selectedRoles);
+    public String addUser(@ModelAttribute("user") User user, @RequestParam(value = "selectRoles") String[] selectedRoles) {
+        service.saveUser(user, selectedRoles);
         return ("redirect:/admin");
     }
 
@@ -59,9 +46,7 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute ("user") User user,
-                         @PathVariable("id") long id,
-                         @RequestParam(value = "selectRoles") String[] selectedRoles){
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id, @RequestParam(value = "selectRoles") String[] selectedRoles) {
         service.updateUser(user, selectedRoles);
         return "redirect:/admin";
     }
@@ -75,7 +60,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/{id}")
-    public String confirmDeleteUser(@ModelAttribute ("user") User user,@PathVariable("id") long id){
+    public String confirmDeleteUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
         service.deleteUser(id);
         return "redirect:/admin";
     }
