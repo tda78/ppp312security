@@ -8,21 +8,32 @@
 </head>
 <body>
 <table>
+    <caption>All users</caption>
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Age</td>
+        <td>Email</td>
+        <td>Role</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    </thead>
     <tbody>
     <div>
         <th:block th:each="user : ${users}">
             <tr>
                 <td th:text="${user.getId()}"></td>
-                <td th:text="${user.mail}"></td>
-                <td th:text="${user.pass}"></td>
-                <td th:text="${user.username}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
                 <td th:text="${user.age}"></td>
+                <td th:text="${user.mail}"></td>
                 <td th:text="${user.getStringRoles()}"></td>
                 <td><a th:href="@{/admin/{id}/edit(id=${user.id})}" th:text="update">update</a></td>
                 <td><a th:href="@{/admin/{id}/delete(id=${user.id})}" th:text="delete">delete</a></td>
-
             </tr>
-
         </th:block>
     </div>
     </tbody>

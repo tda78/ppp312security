@@ -12,23 +12,19 @@
   <input type="text" th:field="*{user.mail}" id="mail">
   <br>
   <label for="password">password</label>
-  <input th:field="*{user.pass}" type="text" id="password">
+  <input th:field="*{user.password}" type="text" id="password">
   <br>
-  <label for="username">name</label>
-  <input th:field="*{user.username}" type="text" id="username">
+  <label for="firstName">name</label>
+  <input th:field="*{user.firstName}" type="text" id="firstName">
+  <br>
+  <label for="lastName">name</label>
+  <input th:field="*{user.lastName}" type="text" id="lastName">
   <br>
   <label for="age">age</label>
   <input th:field="*{user.age}" type="text" id="age">
   <br>
-<!--
-<select th:field="*{user.roles}" multiple >
-    <option th:each="role : ${allRoles}"
-            th:value="${role}"
-            th:text="${role.getRoleName()}">
-    </option>
-  </select>
-  -->
-
+  <label for="role">role</label>
+  <label th:text="${user.getStringRoles()}"  id="role"></label>
   <br>
   <input type="submit" value="delete user"/>
 </form>

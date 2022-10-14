@@ -16,8 +16,4 @@ public interface UserService extends UserDetailsService {
     void saveUser(User user, String[] selectedRoles);
     void updateUser(User user, String[] selectedRoles);
     void deleteUser (long user);
-
-   Role findRole(String name);
-   List<Role> getAllRoles();
-   String[] convertRolesToNames(List<Role> roles);
 }

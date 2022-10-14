@@ -17,16 +17,28 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
     private UserCrudRepository userRepository;
-    private RoleCrudRepository roleRepository;
+    private RoleService roleService;
 
     public UserCrudRepository getUserRepository() {
         return userRepository;
     }
-@Autowired
-    public UserServiceImpl(UserCrudRepository dao, RoleCrudRepository roleDao) {
-        this.userRepository = dao;
-        this.roleRepository = roleDao;
+
+    public RoleService getRoleService() {
+        return roleService;
     }
+
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
+    @Autowired
+    public UserServiceImpl(UserCrudRepository userRepository, RoleService roleService) {
+        this.userRepository = userRepository;
+        this.roleService = roleService;
+    }
+
+    @Autowired
+
     @Transactional
     @Override
     public List<User> readUsers() {
@@ -36,20 +48,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(long id) {
-
-        User user = userRepository.findById(id).get();
-        return user;
+        return (userRepository.findById(id).get());
     }
 
     @Override
     public void saveUser(User user, String[] selectedRoles) {
-        user.setRoles(convertNamesToRoles(selectedRoles));
+        user.setRoles(roleService.convertNamesToRoles(selectedRoles));
         userRepository.save(user);
     }
 
     @Override
     public void updateUser(User user, String[] selectedRoles) {
-        user.setRoles(convertNamesToRoles(selectedRoles));
+        user.setRoles(roleService.convertNamesToRoles(selectedRoles));
         userRepository.save(user);
     }
 
@@ -58,36 +68,16 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    @Override
-    public Role findRole(String name) {
-        return roleRepository.getById(name);
-    }
 
-    @Override
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
 
-    public String[] convertRolesToNames(List<Role> roles){
-        String[] names = new String[roles.size()];
-        for (int i = 0; i<roles.size(); i++){
-            names[i] = roles.get(i).getRoleName();
-        }
-        return names;
-    }
 
-    private List<Role> convertNamesToRoles(String[] names){
-        List<Role>userRoles = new ArrayList<>();
-        for (String s:names) userRoles.add(findRole(s));
-        return userRoles;
-    }
 
     public UserServiceImpl() {
     }
 @Transactional
     // @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
-        return user;
+        return (userRepository.findUserByMail(username));
+
     }
 }

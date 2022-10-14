@@ -5,63 +5,68 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    UserService service;
+    private UserService userService;
+    private RoleService roleService;
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @Autowired
-    public void setService(UserService service) {
-        this.service = service;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping()
     public String printUsers(Model model) {
-        model.addAttribute("users", service.readUsers());
+        model.addAttribute("users", userService.readUsers());
         return "users";
     }
 
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("allRoles", service.getAllRoles());
+        model.addAttribute("allRoles", roleService.getAllRoles());
         return "new";
     }
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user, @RequestParam(value = "selectRoles") String[] selectedRoles) {
-        service.saveUser(user, selectedRoles);
+        userService.saveUser(user, selectedRoles);
         return ("redirect:/admin");
     }
 
     @GetMapping("/{id}/edit")
     public String update(Model model, @PathVariable("id") long id) {
-        User user = service.getUser(id);
+        User user = userService.getUser(id);
         model.addAttribute("user", user);
-        model.addAttribute("allRoles", service.getAllRoles());
-        model.addAttribute("selectedRoles", service.convertRolesToNames(user.getRoles()));
+        model.addAttribute("allRoles", roleService.getAllRoles());
+        model.addAttribute("selectedRoles", roleService.convertRolesToNames(user.getRoles()));
         return "edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") long id, @RequestParam(value = "selectRoles") String[] selectedRoles) {
-        service.updateUser(user, selectedRoles);
+        userService.updateUser(user, selectedRoles);
         return "redirect:/admin";
     }
 
     @GetMapping("/{id}/delete")
     public String deleteUser(Model model, @PathVariable("id") long id) {
-        model.addAttribute("user", service.getUser(id));
-        model.addAttribute("allRoles", service.getAllRoles());
-
+        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("allRoles", roleService.getAllRoles());
         return "delete";
     }
 
     @DeleteMapping("/{id}")
     public String confirmDeleteUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-        service.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/admin";
     }
 }

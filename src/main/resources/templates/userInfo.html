@@ -6,13 +6,22 @@
     <title>Title</title>
 </head>
 <body>
-<div th:text="${auth.id}"></div>
-<div th:text="${auth.mail}"></div>
-<div th:text="${auth.pass}"></div>
-<div th:text="${auth.username}"></div>
-<div th:text="${auth.age}"></div>
-<div th:text="${auth.getStringRoles()}"></div>
-<a href="/admin">users</a>
-<a th:href="@{/logout}"> Logout</a>
+<label>ID</label>
+    <div th:text="${auth.id}"></div>
+<label>Mail</label>
+    <div th:text="${auth.mail}"></div>
+<label>Password</label>
+    <div th:text="${auth.password}"></div>
+<label>First name</label>
+    <div th:text="${auth.firstName}"></div>
+<label>Last name</label>
+    <div th:text="${auth.lastName}"></div>
+<label>Age</label>
+    <div th:text="${auth.age}"></div>
+<label>Role</label>
+    <div th:text="${auth.getStringRoles()}"></div>
+
+    <a href="/admin">Admin</a>
+    <a th:href="@{/logout}"> Logout</a>
 </body>
 </html>

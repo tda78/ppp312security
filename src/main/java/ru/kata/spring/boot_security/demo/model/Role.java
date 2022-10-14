@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
-    //   @ManyToMany(mappedBy = "roles")
+    int role_id;
     String roleName;
 
     public String getRoleName() {
